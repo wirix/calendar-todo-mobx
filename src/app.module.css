@@ -1,0 +1,33 @@
+.app {
+	display: grid;
+	grid-template-columns: [startNewTask] 300px [endNewTask] 50px [main];
+}
+
+.newCard {
+	grid-column: startNewTask / endNewTask;
+	background-color: #6b6b6b;
+}
+
+.content {
+	grid-column: main;
+	background-color: #6d3b3b;
+}
+
+.cards {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.card {
+	width: 100px;
+	height: 150px;
+	border: 1px solid black;
+}
+
+.card input {
+	width: 100px;
+}
+
+.gray {
+	background-color: gray;
+}

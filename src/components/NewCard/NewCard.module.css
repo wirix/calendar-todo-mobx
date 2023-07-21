@@ -1,0 +1,13 @@
+.card {
+	width: 100px;
+	height: 150px;
+	border: 1px solid black;
+}
+
+.card input {
+	width: 100px;
+}
+
+.start {
+	transform: translate(0%, 0%);
+}
