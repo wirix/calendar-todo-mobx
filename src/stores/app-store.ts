@@ -12,19 +12,13 @@ interface IInfoTaskAboutMonth {
 export interface ITodoClass {
 	selectedMonth: number;
 	countDaysOfMonth: number;
-	infoTaskAboutMonth: IInfoTaskAboutMonth[];
+	yearData: IInfoTaskAboutMonth[][] | [];
 }
 
 class TodoStore implements ITodoClass {
 	selectedMonth = 0
 	countDaysOfMonth = 0
-	infoTaskAboutMonth = [{
-		numberOfDay: 0,
-		task: {
-			description: 'string',
-			isClosed: true
-		}
-	}]
+	yearData: IInfoTaskAboutMonth[][] | [] = []
 
 	constructor() {
 		makeAutoObservable(this)
@@ -38,24 +32,32 @@ class TodoStore implements ITodoClass {
 		this.countDaysOfMonth = newCountDaysOfMonth
 	}
 
-	setNewInfoTaskAboutMonth = (newInfoTaskAboutMonth: IInfoTaskAboutMonth[]) => {
-		this.infoTaskAboutMonth = newInfoTaskAboutMonth
+	setYearData = (newInfoTaskAboutMonth: IInfoTaskAboutMonth[][] | []) => {
+		this.yearData = newInfoTaskAboutMonth
 	}
 
-	setMonth = (newMonth: number) => {
-		const daysInMonth = getDaysInMonth(newMonth)
-		this.setCountDaysOfMonth(daysInMonth)
-		let infoMonth: IInfoTaskAboutMonth[] = []
-		for (let i = 0; i < daysInMonth; i++) {
-			infoMonth = [...infoMonth, {
-				numberOfDay: i,
-				task: {
-					description: '',
-					isClosed: false
-				}
-			}]
+	setYear = () => {
+		const infoYear: IInfoTaskAboutMonth[][] = Array.from({ length: 12 }, () => []);
+		for (let month = 0; month < 12; month++) {
+			const daysInMonth = getDaysInMonth(month+1)
+			for (let day = 1; day <= daysInMonth; day++) {
+				infoYear[month].push({
+					numberOfDay: day,
+					task: {
+						description: '',
+						isClosed: false
+					}
+				})
+			}
 		}
-		this.setNewInfoTaskAboutMonth(infoMonth)
+		this.setYearData(infoYear)
+	}
+
+	setNewTask = (month: number, day: number, description: string) => {
+		this.yearData[month][day].task = {
+			description, 
+			isClosed: false
+		}
 	}
 }
 
